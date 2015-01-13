@@ -1,0 +1,4 @@
+Django==1.5.12
+mock==1.0.1
+requests==2.5.1
+stripe==1.9.2
