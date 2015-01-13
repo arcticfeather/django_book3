@@ -48,8 +48,8 @@ class MainPageTests(TestCase):
         with mock.patch('main.views.User') as user_mock:
 
             # tll the mock what to do when caleed
-            config = {'get.return_value': user}
-            user_mock.objects.configure_mock(**config)
+            config = {'get_by_id.return_value': mock.Mock()}
+            user_mock.configure_mock(**config)
 
             #run the test
             resp = index(self.request)
@@ -58,5 +58,6 @@ class MainPageTests(TestCase):
             self.request.session = {}
 
             expectedHtml = render_to_response(
-                'user.html', {'user': user}).content
-            self.assertEquals(resp.content, expectedHtml)
+                'user.html', {'user': user_mock.get_by_id(1)}
+            )
+            self.assertEquals(resp.content, expectedHtml.content)
